@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Additive manual installer for auto-update-claude.
+# Additive manual installer for auto-update-claude-md.
 #
 # This script ONLY ADDS its two hooks to ~/.claude/settings.json. It never
 # replaces or removes your existing settings. It is idempotent: re-running it
@@ -7,28 +7,28 @@
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
-HOOK_SRC="$REPO_DIR/plugins/auto-update-claude/hooks/auto-update-claude.sh"
+HOOK_SRC="$REPO_DIR/plugins/auto-update-claude-md/hooks/auto-update-claude-md.sh"
 HOOK_DEST_DIR="$HOME/.claude/hooks"
 SETTINGS="$HOME/.claude/settings.json"
 
 # 1) Install the hook script
 mkdir -p "$HOOK_DEST_DIR"
-cp "$HOOK_SRC" "$HOOK_DEST_DIR/auto-update-claude.sh"
-chmod +x "$HOOK_DEST_DIR/auto-update-claude.sh" 2>/dev/null || true
-echo "Installed hook -> $HOOK_DEST_DIR/auto-update-claude.sh"
+cp "$HOOK_SRC" "$HOOK_DEST_DIR/auto-update-claude-md.sh"
+chmod +x "$HOOK_DEST_DIR/auto-update-claude-md.sh" 2>/dev/null || true
+echo "Installed hook -> $HOOK_DEST_DIR/auto-update-claude-md.sh"
 
 # 2) The hooks fragment we add (and only this)
-FRAGMENT='{"hooks":{"SessionStart":[{"hooks":[{"type":"command","command":"bash \"$HOME/.claude/hooks/auto-update-claude.sh\" sessionstart"}]}],"UserPromptSubmit":[{"hooks":[{"type":"command","command":"bash \"$HOME/.claude/hooks/auto-update-claude.sh\" cadence"}]}]}}'
+FRAGMENT='{"hooks":{"SessionStart":[{"hooks":[{"type":"command","command":"bash \"$HOME/.claude/hooks/auto-update-claude-md.sh\" sessionstart"}]}],"UserPromptSubmit":[{"hooks":[{"type":"command","command":"bash \"$HOME/.claude/hooks/auto-update-claude-md.sh\" cadence"}]}]}}'
 
 if command -v jq >/dev/null 2>&1; then
   mkdir -p "$(dirname "$SETTINGS")"
   [ -f "$SETTINGS" ] || printf '%s' '{}' > "$SETTINGS"
   tmp="$(mktemp)"
   # Preserve every other key. For SessionStart/UserPromptSubmit, drop any prior
-  # auto-update-claude entries (idempotency) and append ours. Other events and
+  # auto-update-claude-md entries (idempotency) and append ours. Other events and
   # all other settings keys are left untouched.
   jq --argjson add "$FRAGMENT" '
-    def strip($a): [ ($a // [])[] | select((([.hooks[]?.command] | join(" ")) | test("auto-update-claude")) | not) ];
+    def strip($a): [ ($a // [])[] | select((([.hooks[]?.command] | join(" ")) | test("auto-update-claude-md")) | not) ];
     .hooks = (.hooks // {})
     | .hooks.SessionStart     = (strip(.hooks.SessionStart)     + $add.hooks.SessionStart)
     | .hooks.UserPromptSubmit = (strip(.hooks.UserPromptSubmit) + $add.hooks.UserPromptSubmit)

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# auto-update-claude.sh
+# auto-update-claude-md.sh
 # Cadence hook for Claude Code: keeps each project's memory fresh.
 #
 # Modes (first argument):
@@ -22,7 +22,7 @@ mode="${1:-cadence}"
 proj="${CLAUDE_PROJECT_DIR:-$PWD}"
 
 # Per-project counter under ~/.claude (never touches your repos).
-state_dir="$HOME/.claude/state/auto-update-claude"
+state_dir="$HOME/.claude/state/auto-update-claude-md"
 mkdir -p "$state_dir" 2>/dev/null || true
 key="$(printf '%s' "$proj" | tr '/\\:' '___')"
 count_file="$state_dir/$key.count"
@@ -34,7 +34,7 @@ has_claudemd() {
 case "$mode" in
   sessionstart)
     if ! has_claudemd; then
-      printf '%s\n' "[auto-update-claude] This project has no CLAUDE.md. If you already understand its purpose and structure (build/test commands, conventions, architecture, key paths), create a CONCISE CLAUDE.md at the project root. If you don't have enough context yet, ignore this for now."
+      printf '%s\n' "[auto-update-claude-md] This project has no CLAUDE.md. If you already understand its purpose and structure (build/test commands, conventions, architecture, key paths), create a CONCISE CLAUDE.md at the project root. If you don't have enough context yet, ignore this for now."
     fi
     ;;
 
@@ -48,7 +48,7 @@ case "$mode" in
     printf '%s' "$count" > "$count_file" 2>/dev/null || true
 
     if [ $((count % N)) -eq 0 ]; then
-      printf '%s\n' "[auto-update-claude] ${N} messages have passed (total: ${count} in this project). BEFORE answering, update your memory ONLY if you have learned something durable (design decisions, conventions, key paths/commands, bug fixes): write the new facts as files in your memory/ folder and refresh the MEMORY.md index; if you discovered a STABLE project convention, also add it to CLAUDE.md. If there is nothing new worth remembering, do NOT write anything and answer normally."
+      printf '%s\n' "[auto-update-claude-md] ${N} messages have passed (total: ${count} in this project). BEFORE answering, update your memory ONLY if you have learned something durable (design decisions, conventions, key paths/commands, bug fixes): write the new facts as files in your memory/ folder and refresh the MEMORY.md index; if you discovered a STABLE project convention, also add it to CLAUDE.md. If there is nothing new worth remembering, do NOT write anything and answer normally."
     fi
     ;;
 

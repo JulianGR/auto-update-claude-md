@@ -1,5 +1,5 @@
 {
-  "name": "auto-update-claude",
+  "name": "auto-update-claude-md",
   "owner": {
     "name": "JulianGR"
   },
@@ -9,8 +9,8 @@
   },
   "plugins": [
     {
-      "name": "auto-update-claude",
-      "source": "./plugins/auto-update-claude",
+      "name": "auto-update-claude-md",
+      "source": "./plugins/auto-update-claude-md",
       "description": "Force a memory review every N messages and propose creating CLAUDE.md when missing."
     }
   ]
