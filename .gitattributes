@@ -1,0 +1,6 @@
+# Normalize line endings. Shell scripts MUST stay LF (CRLF breaks them with
+# "bad interpreter" on Linux/macOS and in Git Bash on Windows).
+* text=auto eol=lf
+*.sh text eol=lf
+*.json text eol=lf
+*.md text eol=lf

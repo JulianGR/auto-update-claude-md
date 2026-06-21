@@ -1,0 +1,17 @@
+{
+  "name": "auto-update-claude",
+  "owner": {
+    "name": "JulianGR"
+  },
+  "metadata": {
+    "description": "Keep each project's Claude Code memory fresh automatically.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "auto-update-claude",
+      "source": "./plugins/auto-update-claude",
+      "description": "Force a memory review every N messages and propose creating CLAUDE.md when missing."
+    }
+  ]
+}
