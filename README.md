@@ -1,4 +1,4 @@
-# auto-update-claude
+# auto-update-claude-md
 
 Hooks for **Claude Code** that keep each project's memory fresh on a **fixed
 cadence**, built on top of the native _Auto Memory_.
