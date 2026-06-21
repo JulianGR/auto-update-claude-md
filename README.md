@@ -25,7 +25,7 @@ It does two things:
 | `SessionStart` | When a session opens/resumes | If `CLAUDE.md` is missing, suggests creating it |
 | `UserPromptSubmit` | On every user message | Counts; every N, injects the "update memory" instruction |
 
-- The **counter** lives in `~/.claude/state/auto-update-claude/<project>.count`
+- The **counter** lives in `~/.claude/state/auto-update-claude-md/<project>.count`
   (outside your repos — it never pollutes git).
 - The **frequency** is controlled by `AUTO_UPDATE_CLAUDE_N` (default `5`).
 
@@ -43,8 +43,8 @@ do **not** modify or replace your `settings.json`.
 In a `claude` terminal:
 
 ```text
-/plugin marketplace add JulianGR/auto-update-claude
-/plugin install auto-update-claude@auto-update-claude
+/plugin marketplace add JulianGR/auto-update-claude-md
+/plugin install auto-update-claude-md@auto-update-claude-md
 ```
 
 Restart the session. Done — it applies to all your projects.
@@ -55,8 +55,8 @@ The included `install.sh` only **adds** its hooks to your `~/.claude/settings.js
 and preserves everything else. It is **idempotent** (safe to re-run).
 
 ```bash
-git clone https://github.com/JulianGR/auto-update-claude.git
-cd auto-update-claude
+git clone https://github.com/JulianGR/auto-update-claude-md.git
+cd auto-update-claude-md
 bash install.sh
 ```
 
@@ -81,7 +81,7 @@ Guide: `3` aggressive · `5` recommended · `8-10` relaxed.
 
 ## Management skill
 
-The plugin ships an `auto-update-claude` skill so you can ask Claude things like:
+The plugin ships an `auto-update-claude-md` skill so you can ask Claude things like:
 
 - "what's the memory counter at?"
 - "change the cadence to 8"
